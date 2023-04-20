@@ -15,18 +15,23 @@ var bot = new ChatSDK({
         }
       ]
     },
+
     requests: {
       send: function (msg) {
         if (msg.type === 'text') {
           return {
+            headers: {'Content-Type': 'application/json'},
             url: 'http://127.0.0.1:5000/anwser',
-            data: {
+            body: JSON.stringify({
               question: msg.content.text
-            }
+            }),
+            method: 'POST'
           };
         }
       }
       },
+
+
       handlers: {
       parseResponse: function (res, requestType) {
         // 根据 requestType 处理数据
