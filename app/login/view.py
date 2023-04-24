@@ -1,21 +1,25 @@
-from flask import render_template 
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField,PasswordField
-from wtforms.validators import DataRequired
+from flask import render_template,request,url_for,redirect,flash,make_response,session
+from app.loginForm import LoginForm as Form
+from flask_login import login_user
 from . import login
+from ..models import User
 
 
-class LoginForm(FlaskForm):
-    name = StringField('请输入用户名：',validators=[DataRequired()])
-    password = PasswordField('请输入密码：',validators=[DataRequired()])
-    submit = SubmitField('提交')
-
-
-
-@login.route('/',methods = ['GET', 'POST'])
+@login.route('/login',methods = ['GET', 'POST'])
 def login_in():
-    form = LoginForm()
-    # if form.validate_on_submit():
-    #     name = form.name.data
-    #     form.name.data = ''
+    if session:
+        return redirect(url_for('static',filename='index.html'))
+    form = Form()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username = form.name.data).first()
+        if user is not None and user.vefiy_password(form.password.data):
+            login_user(user)
+            next = request.args.get('next')
+            if next is None or not next.startswith('/'):
+               next = url_for('static',filename='index.html')
+               resp = make_response(redirect(next))
+               resp.set_cookie('user_id',str(user.id))
+               resp.set_cookie('user_name',user.username)
+            return resp
+        flash('用户名或者密码不正确')
     return render_template('login.html',loginform=form)

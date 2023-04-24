@@ -1,7 +1,7 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %} 
+{% block title %}用户登录{% endblock %}
 
-<form name="loginform" method="POST">
-    {{loginform.hidden_tag()}}
-    {{loginform.name.lable}}{{loginform.name()}}
-    {{loginform.password.lable}}{{loginform.password()}}
-    {{loginform.submit()}}
-</form>
+{% block content %}
+{{wtf.quick_form(loginform)}}
+{% endblock %}

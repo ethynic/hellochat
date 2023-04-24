@@ -1,3 +1,5 @@
+let chatContent= [{"role":"system","content":"你是程序员的好帮手，帮助程序员找到示例代码，解决复杂的技术问题！"}];
+
 var bot = new ChatSDK({
     config: {
       navbar: {
@@ -19,11 +21,12 @@ var bot = new ChatSDK({
     requests: {
       send: function (msg) {
         if (msg.type === 'text') {
+          chatContent.push({"role":"user","content":msg.content.text})
           return {
             headers: {'Content-Type': 'application/json'},
             url: 'http://127.0.0.1:5000/anwser',
             body: JSON.stringify({
-              question: msg.content.text
+              question: chatContent
             }),
             method: 'POST'
           };
@@ -42,8 +45,10 @@ var bot = new ChatSDK({
                     text:''
                 }
             };
-            if (!res.errmsg) 
+            if (!res.errmsg) {
               response.content.text = res.choices[0].message.content;
+              chatContent.push({"role":"assistant","content":response.content.text});
+            }
             else 
               response.content.text = res.message;
             console.log(response);
