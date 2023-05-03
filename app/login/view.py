@@ -7,9 +7,9 @@ from ..models import User
 
 @login.route('/login',methods = ['GET', 'POST'])
 def login_in():
-    if session:
-        return redirect(url_for('static',filename='index.html'))
-    else:
+    # if session:
+    #     return redirect(url_for('static',filename='index.html'))
+    # else:
         form = Form()
         if form.validate_on_submit():
             user = User.query.filter_by(username = form.name.data).first()
