@@ -24,7 +24,7 @@ var bot = new ChatSDK({
           chatContent.push({"role":"user","content":msg.content.text})
           return {
             headers: {'Content-Type': 'application/json'},
-            url: 'http://127.0.0.1:5000/anwser',
+            url: '/anwser',
             body: JSON.stringify({
               question: chatContent
             }),
