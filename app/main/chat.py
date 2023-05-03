@@ -5,7 +5,7 @@ from flask_cors import cross_origin
 from app.loginForm import LoginForm as Form
 
 
-openai.api_key = "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"
+openai.api_key = "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"
 # openai.api_key = current_app.config['OPEN_AI_KEY']
 
 
