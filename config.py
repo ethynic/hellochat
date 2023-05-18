@@ -19,6 +19,18 @@ class Prod_config(Config):
     
 class ProdDocker_config(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+
+    @classmethod
+    def init_app(cls, app):
+        Prod_config.init_app(app)
+
+        # 把日志输出到stderr
+        import logging
+        from logging import StreamHandler
+        file_handler = StreamHandler()
+        file_handler.setLevel(logging.INFO)
+        app.logger.addHandler(file_handler)
+
     
     
 config = {
