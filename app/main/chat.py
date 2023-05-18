@@ -1,12 +1,10 @@
-from flask import request,make_response,render_template,current_app,redirect,url_for
-import openai
+from flask import request,make_response,redirect,url_for,current_app
+import os,openai
 from . import main
 from flask_cors import cross_origin
-from app.loginForm import LoginForm as Form
 
 
-openai.api_key = "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"
-# openai.api_key = current_app.config['OPEN_AI_KEY']
+openai.api_key = os.getenv('OPEN_AI_KEY')
 
 
 @main.route("/")
