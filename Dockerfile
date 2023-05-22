@@ -3,9 +3,6 @@ FROM python:3.10-alpine
 ENV FLASK_APP flasky.py
 ENV FLASK_CONFIG docker
 
-RUN adduser -D flasky
-USER flasky
-
 WORKDIR /home/flasky
 
 COPY requirements.txt requirements.txt
