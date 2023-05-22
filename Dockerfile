@@ -16,6 +16,7 @@ RUN venv/bin/pip install -r requirements.txt
 COPY app app
 COPY migrations migrations
 COPY flasky.py config.py boot.sh ./
+RUN chmod +x ./boot.sh
 
 EXPOSE 5000
 ENTRYPOINT ["./boot.sh"]
