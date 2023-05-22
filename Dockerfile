@@ -13,7 +13,11 @@ RUN venv/bin/pip install -r requirements.txt
 COPY app app
 COPY migrations migrations
 COPY flasky.py config.py boot.sh data.sqlite ./
+<<<<<<< HEAD
 RUN chmod +x ./boot.sh
+=======
+RUN mv boot.sh entrypoint.sh && chmod +x ./entrypoint.sh
+>>>>>>> 65197bf53d551626f38579de1982d746dadb8be4
 
 EXPOSE 5000
-ENTRYPOINT ["./boot.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
