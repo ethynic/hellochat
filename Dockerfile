@@ -15,7 +15,8 @@ RUN venv/bin/pip install gunicorn
 RUN venv/bin/pip install -r requirements.txt
 COPY app app
 COPY migrations migrations
-COPY flasky.py config.py boot.sh ./
+COPY flasky.py config.py boot.sh data.sqlite ./
+RUN chmod +x boot.sh
 
 EXPOSE 5000
 ENTRYPOINT ["./boot.sh"]
